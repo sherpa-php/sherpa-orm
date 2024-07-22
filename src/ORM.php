@@ -7,7 +7,7 @@ use Sherpa\Orm\utilities\Naming;
 trait ORM
 {
 
-    private static string $customTable;
+    public static string $table;
 
     public function __construct()
     {
@@ -34,7 +34,7 @@ trait ORM
      */
     public static function getTable(): string
     {
-        return self::$customTable
+        return self::$table
                ?? Naming::tableFromModel(self::class);
     }
 

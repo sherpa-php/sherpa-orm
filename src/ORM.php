@@ -2,12 +2,24 @@
 
 namespace Sherpa\Orm;
 
+use Sherpa\Orm\utilities\Naming;
+
 trait ORM
 {
 
-    private static string $table;
+    private static string $customTable;
 
     public function __construct()
+    {
+        $this->constructor();
+    }
+
+    /**
+     * Constructor code.
+     *
+     * To be used by classes that use this trait.
+     */
+    public function constructor(): void
     {
         //
     }

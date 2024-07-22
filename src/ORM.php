@@ -28,6 +28,9 @@ trait ORM
     {
         echo "FIND_BY_ID_MODEL_ORM_METHOD__TEST1";
 
+        $query = new ORMQuery(self::class);
+        $query->setId($id);
+
         return new self();  // TODO STUB
     }
 

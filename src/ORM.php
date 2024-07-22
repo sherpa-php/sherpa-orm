@@ -26,7 +26,7 @@ trait ORM
 
     public static function findById(mixed $id): self
     {
-
+        echo "FIND_BY_ID_MODEL_ORM_METHOD__TEST1";
     }
 
     /**

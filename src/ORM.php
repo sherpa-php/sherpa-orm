@@ -2,6 +2,7 @@
 
 namespace Sherpa\Orm;
 
+use Sherpa\Orm\conditions\ConditionLinkOperator;
 use Sherpa\Orm\utilities\Naming;
 
 trait ORM
@@ -30,6 +31,8 @@ trait ORM
 
         $query = new ORMQuery(self::class, QueryAction::SELECT);
         $query->setId($id);
+        $query->addCondition(ConditionLinkOperator::AND, "id", '=', $id);
+        echo $query->getSqlQuery();
 
         return new self();  // TODO STUB
     }

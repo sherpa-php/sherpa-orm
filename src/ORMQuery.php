@@ -61,14 +61,6 @@ class ORMQuery
     {
         $sql = "";
 
-        echo $this->getQueryAsSelectAction();
-
-        // action to do?
-        // columns?
-        // table?
-        // conditions?
-        // etc...
-
         return $sql;
     }
 
@@ -77,8 +69,8 @@ class ORMQuery
      */
     private function getQueryAsSelectAction(): string
     {
-        return "SELECT {$this->getColumnsAsString()} FROM {$this->model->getTable()}"
-             . $this->getWhereStatement();
+        return "SELECT {$this->getColumnsAsString()} FROM {$this->model::getTable()}"
+              . $this->getWhereStatement();
     }
 
     /**
@@ -100,13 +92,14 @@ class ORMQuery
 
         if ($this->hasConditions())
         {
-            $where = "WHERE {$this->getConditions()[0]->getStatement()}";
+            $where = " WHERE {$this->getConditions()[0]->getStatement()}";
 
             for ($conditionIndex = 1; $conditionIndex < count($this->getConditions()); $conditionIndex++)
             {
                 $condition = $this->getConditions()[$conditionIndex];
 
-                $where .= $condition->getConditionLinkOperator() . $condition->getStatement();
+                $where .= $condition->getLinkOperator()->value
+                        . $condition->getStatement();
             }
         }
 
@@ -127,6 +120,38 @@ class ORMQuery
     public function hasConditions(): bool
     {
         return count($this->getConditions());
+    }
+
+    /**
+     * @return string Model class name
+     */
+    public function getModel(): string
+    {
+        return $this->model;
+    }
+
+    /**
+     * @return QueryAction
+     */
+    public function getAction(): QueryAction
+    {
+        return $this->action;
+    }
+
+    /**
+     * @return array Columns to retrieve
+     */
+    public function getColumns(): array
+    {
+        return $this->columns;
+    }
+
+    /**
+     * @return mixed ID to use on rows retrieving if given
+     */
+    public function getId(): mixed
+    {
+        return $this->id;
     }
 
 }

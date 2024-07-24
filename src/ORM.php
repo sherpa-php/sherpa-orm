@@ -10,9 +10,11 @@ trait ORM
 
     public static string $table;
 
-    public function __construct()
+    private ORMQuery $query;
+
+    public function __construct(ORMQuery $query)
     {
-        $this->constructor();
+        $this->constructor($query);
     }
 
     /**
@@ -20,11 +22,26 @@ trait ORM
      *
      * To be used by classes that use this trait.
      */
-    public function constructor(): void
+    public function constructor(ORMQuery $query): void
     {
-        //
+        $this->query = $query;
     }
 
+    public function where(string $leftColumn, string $operator, $rightValue): self
+    {
+        $this->query
+             ->addCondition(ConditionLinkOperator::AND,
+                            $leftColumn,
+                            $operator,
+                            $rightValue);
+
+        return $this;
+    }
+
+    /**
+     * @param $id
+     * @return ORM
+     */
     public static function findById($id): self
     {
         echo "FIND_BY_ID_MODEL_ORM_METHOD__TEST1";
@@ -34,7 +51,7 @@ trait ORM
         $query->addCondition(ConditionLinkOperator::AND, "id", '=', $id);
         echo $query->getSqlQuery();
 
-        return new self();  // TODO STUB
+        return new self($query);
     }
 
     /**

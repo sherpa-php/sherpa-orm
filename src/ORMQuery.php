@@ -59,9 +59,13 @@ class ORMQuery
      */
     public function getSqlQuery(): string
     {
-        $sql = "";
-
-        return $sql;
+        return match ($this->getAction())
+        {
+            QueryAction::SELECT => $this->getQueryAsSelectAction(),
+            QueryAction::UPDATE => throw new \Exception('To be implemented'),
+            QueryAction::INSERT => throw new \Exception('To be implemented'),
+            QueryAction::DELETE => throw new \Exception('To be implemented'),
+        };
     }
 
     /**
